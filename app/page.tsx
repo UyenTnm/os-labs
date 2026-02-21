@@ -7,6 +7,8 @@ import { Process } from "@/components/sections/process";
 import { Pricing } from "@/components/sections/pricing";
 import { Contact } from "@/components/sections/contact";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
+import LoginPage from "./login/page";
+import Link from "next/link";
 
 export default function Home() {
   return (

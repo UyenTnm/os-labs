@@ -1,20 +1,21 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
-import { ThemeToggle } from './theme-toggle'
+import Link from "next/link";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#portfolio' },
-  { label: 'Process', href: '#process' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Contact', href: '#contact' },
-]
+  { label: "Services", href: "#services" },
+  { label: "Work", href: "#portfolio" },
+  { label: "Process", href: "#process" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Contact", href: "#contact" },
+  { label: "Login", href: "/login" },
+];
 
 export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -23,7 +24,9 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
-              <span className="text-sm font-mono font-bold text-accent">OS</span>
+              <span className="text-sm font-mono font-bold text-accent">
+                OS
+              </span>
             </div>
             <span className="text-lg font-mono font-semibold text-foreground hidden sm:inline">
               OS LABS
@@ -98,5 +101,5 @@ export function Header() {
         )}
       </div>
     </header>
-  )
+  );
 }

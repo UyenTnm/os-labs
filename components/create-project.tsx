@@ -5,20 +5,39 @@ import { createClient } from "@/lib/supabase/client";
 
 export function CreateProject() {
   const supabase = createClient();
+
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCreate = async () => {
+    if (!name) {
+      alert("Please enter project name");
+      return;
+    }
+
+    setLoading(true);
+
+    // get user
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const trackingId = "trk_" + Math.random().toString(36).substring(2, 9);
+    if (!user) {
+      alert("Not authenticated");
+      setLoading(false);
+      return;
+    } 
+
+    // better tracking id
+    const trackingId = "trk_" + crypto.randomUUID().slice(0, 8);
 
     const { error } = await supabase.from("projects").insert({
       name,
       tracking_id: trackingId,
-      user_id: user?.id,
+      user_id: user.id,
     });
+
+    setLoading(false);
 
     if (error) {
       alert(error.message);
@@ -26,19 +45,29 @@ export function CreateProject() {
     }
 
     alert("Project created!");
-    location.reload();
+
+    // clear input
+    setName("");
+
+    // reload nhẹ (optional)
+    window.location.reload();
   };
 
   return (
     <div className="space-y-2">
       <input
         placeholder="Project name"
-        className="border p-2"
+        className="border p-2 w-full"
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <button onClick={handleCreate} className="border px-3 py-1">
-        Create Project
+      <button
+        onClick={handleCreate}
+        className="border px-3 py-1"
+        disabled={loading}
+      >
+        {loading ? "Creating..." : "Create Project"}
       </button>
     </div>
   );
